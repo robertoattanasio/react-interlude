@@ -1,6 +1,6 @@
 # react-interlude
 
-A covered moment between two states of a React app. The curtain is your own component, animated however you like.
+Cover the screen with your own animated component while your React app gets ready. The curtain is your component and your animation: the library only tells it when to come in and when to leave.
 
 I built it for page transitions, but it works for anything that has to hide the screen for a moment: a first load, a global operation, a theme that needs its fonts.
 

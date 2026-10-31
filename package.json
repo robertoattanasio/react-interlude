@@ -1,7 +1,7 @@
 {
   "name": "react-interlude",
   "version": "0.1.0",
-  "description": "A covered moment between two states of a React app. The curtain is your component, animated however you like.",
+  "description": "Cover the screen with your own animated component while your React app gets ready.",
   "keywords": [
     "react",
     "interlude",
