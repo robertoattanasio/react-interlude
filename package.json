@@ -1,15 +1,14 @@
 {
   "name": "react-interlude",
   "version": "0.1.0",
-  "description": "Loading screens and page transitions for React. You bring the animation.",
+  "description": "Loading screens for React. You bring the animation.",
   "keywords": [
     "react",
     "interlude",
-    "overlay",
-    "curtain",
-    "transition",
-    "page-transition",
     "loading",
+    "loading-screen",
+    "curtain",
+    "overlay",
     "typescript"
   ],
   "license": "MIT",

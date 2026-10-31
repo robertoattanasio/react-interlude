@@ -1,6 +1,6 @@
 # react-interlude
 
-Loading screens and page transitions for React. You bring the animation.
+Loading screens for React. You bring the animation.
 
 Your page starts behind a curtain, and the curtain leaves when everything is ready: fonts, data, whatever you're waiting for. The curtain is a normal component, so it can look and move however you want.
 
