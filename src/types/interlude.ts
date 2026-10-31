@@ -38,15 +38,10 @@ export type InterludeTimeline = {
   status: InterludeStatus;
   ready: boolean;
   first: boolean;
-};
-
-export type InterludeActions = {
   cover: () => Promise<void>;
   uncover: () => Promise<void>;
 };
 
-export type InterludeStateValue<TMeta = InterludeMeta> = InterludeTimeline & {
+export type InterludeValue<TMeta = InterludeMeta> = InterludeTimeline & {
   meta: TMeta;
 };
-
-export type InterludeValue<TMeta = InterludeMeta> = InterludeStateValue<TMeta> & InterludeActions;

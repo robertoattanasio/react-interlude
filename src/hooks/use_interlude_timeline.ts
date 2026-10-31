@@ -31,8 +31,7 @@ export const useInterludeTimeline = (initial: InterludeInitial, timing: Interlud
     [status],
   );
 
-  const timeline = useMemo(() => ({ status, ready, first }), [status, ready, first]);
-  const actions = useMemo(() => ({ cover, uncover }), [cover, uncover]);
+  const timeline = useMemo(() => ({ status, ready, first, cover, uncover }), [status, ready, first, cover, uncover]);
 
-  return { timeline, actions, done };
+  return { timeline, done };
 };

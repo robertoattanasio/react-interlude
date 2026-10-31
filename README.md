@@ -40,7 +40,7 @@ Wrap what it covers. By default it starts covered, so the first paint is already
 Cover and uncover whenever you need to, from any component inside it:
 
 ```tsx
-const { cover, uncover } = useInterludeActions();
+const { cover, uncover } = useInterlude();
 
 await cover();
 await save();
@@ -76,10 +76,6 @@ Returns `{ status, ready, first, meta, cover, uncover }`.
 - `status` is the phase, or `"idle"`.
 - `ready` turns `true` once `until` has resolved, before `hold` has ended.
 - `first` is `true` while the curtain on screen is the initial one.
-
-### `useInterludeActions()`
-
-Returns `{ cover, uncover }` and doesn't re-render when the phase changes.
 
 ### The curtain
 
