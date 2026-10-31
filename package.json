@@ -1,0 +1,62 @@
+{
+  "name": "react-interlude",
+  "version": "0.1.0",
+  "description": "A covered moment between two states of a React app. The curtain is your component, animated however you like.",
+  "keywords": [
+    "react",
+    "interlude",
+    "overlay",
+    "curtain",
+    "transition",
+    "page-transition",
+    "loading",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "Roberto Attanasio",
+  "homepage": "https://github.com/robertoattanasio/react-interlude#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertoattanasio/react-interlude.git"
+  },
+  "bugs": {
+    "url": "https://github.com/robertoattanasio/react-interlude/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "workspaces": [
+    "."
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "ts:check": "tsc --noEmit",
+    "dev": "tsc --watch --preserveWatchOutput",
+    "build": "rm -rf dist && tsc",
+    "changeset:add": "changeset",
+    "changeset:bump": "changeset version",
+    "build:release": "npm run ts:check && npm run build && npm pack && changeset publish && git push --follow-tags"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.1",
+    "@types/react": "^19.2.14",
+    "typescript": "^6.0.3"
+  }
+}
