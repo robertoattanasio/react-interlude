@@ -4,6 +4,10 @@ Loading screens for React. You bring the animation.
 
 Your page starts behind a curtain, and the curtain leaves when everything is ready: fonts, data, whatever you're waiting for. The curtain is a normal component, so it can look and move however you want.
 
+Package: [npmjs.com/package/react-interlude](https://www.npmjs.com/package/react-interlude)
+
+Documentation: [dev.robertoattanasio.com/react-interlude](https://dev.robertoattanasio.com/react-interlude)
+
 ```sh
 npm install react-interlude
 ```
@@ -62,6 +66,8 @@ await uncover();
 | `hold`    | the minimum time to stay covered, in ms      |
 | `initial` | `"idle"` to start without the curtain        |
 | `meta`    | anything you want to pass to the curtain     |
+
+Everything else is in the [documentation](https://dev.robertoattanasio.com/react-interlude).
 
 ## License
 
