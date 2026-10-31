@@ -1,8 +1,8 @@
 # react-interlude
 
-Cover the screen with your own animated component while your React app gets ready.
+Loading screens and page transitions for React. You bring the animation.
 
-I use it for page transitions, first loads and anything else that needs a moment off-screen.
+Your page starts behind a curtain, and the curtain leaves when everything is ready: fonts, data, whatever you're waiting for. The curtain is a normal component, so it can look and move however you want.
 
 ```sh
 npm install react-interlude
@@ -10,48 +10,58 @@ npm install react-interlude
 
 ## Usage
 
-The curtain is yours. Animate it however you like and call `done()` when it finishes:
+Write your curtain and wrap your app with `Interlude`:
 
-```tsx
-const Curtain = ({ interlude }: InterludeProps) => (
-  <motion.div
-    className="fixed inset-0 bg-black"
-    initial={interlude.phase === "covered" ? false : { y: "100%" }}
-    animate={{ y: interlude.phase === "leaving" ? "-100%" : "0%" }}
-    onAnimationComplete={() => interlude.done()}
-  />
+```jsx
+import { Interlude } from "react-interlude";
+
+const Curtain = ({ interlude }) => (
+  <div className="curtain" data-phase={interlude.phase} onTransitionEnd={interlude.done} />
 );
+
+function App() {
+  return (
+    <Interlude curtain={Curtain} until={() => document.fonts.ready}>
+      <Page />
+    </Interlude>
+  );
+}
 ```
 
-Wrap your app. The page starts covered, then the curtain leaves once it's ready:
+```css
+.curtain {
+  position: fixed;
+  inset: 0;
+  background: black;
+  transition: opacity 0.5s;
+}
 
-```tsx
-<Interlude curtain={Curtain} hold={650} until={() => document.fonts.ready}>
-  <App />
-</Interlude>
+.curtain[data-phase="leaving"] {
+  opacity: 0;
+}
 ```
 
-Need to cover it again later?
+The curtain gets a `phase`, and calls `done` when its animation ends. That's how it works with CSS, Motion, GSAP or anything else.
 
-```tsx
+To bring it back, use `useInterlude` anywhere inside:
+
+```jsx
 const { cover, uncover } = useInterlude();
 
 await cover();
-await save();
+await saveEverything();
 await uncover();
 ```
 
-## Props
+## Options
 
-| prop      | what it does                                  |
-| --------- | --------------------------------------------- |
-| `curtain` | your component                                |
-| `hold`    | the minimum time to stay covered, in ms       |
-| `until`   | a promise to wait for before leaving          |
-| `initial` | `"covered"` (default) or `"idle"`             |
-| `meta`    | anything you want to read in the curtain      |
-
-`useInterlude()` also gives you `status`, `ready`, `first` and `meta`.
+| prop      | what it does                                 |
+| --------- | -------------------------------------------- |
+| `curtain` | your component                               |
+| `until`   | what to wait for before leaving              |
+| `hold`    | the minimum time to stay covered, in ms      |
+| `initial` | `"idle"` to start without the curtain        |
+| `meta`    | anything you want to pass to the curtain     |
 
 ## License
 
