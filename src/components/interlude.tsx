@@ -13,6 +13,7 @@ export const Interlude = <TMeta = InterludeMeta,>({
   hold,
   until,
   meta,
+  persist,
 }: InterludeComponentProps<TMeta>) => {
   const { timeline, done } = useInterludeTimeline(initial, { hold, until });
   const { status } = timeline;
@@ -20,8 +21,8 @@ export const Interlude = <TMeta = InterludeMeta,>({
   const value = useMemo(() => ({ ...timeline, meta: meta as TMeta }), [timeline, meta]);
 
   const curtain = useMemo(
-    () => (status === "idle" ? null : <Curtain interlude={{ phase: status, meta: meta as TMeta, done }} />),
-    [Curtain, status, meta, done],
+    () => (status === "idle" && !persist ? null : <Curtain interlude={{ phase: status, meta: meta as TMeta, done }} />),
+    [Curtain, status, meta, done, persist],
   );
 
   return (

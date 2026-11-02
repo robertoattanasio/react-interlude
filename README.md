@@ -66,6 +66,7 @@ await uncover();
 | `hold`    | the minimum time to stay covered, in ms      |
 | `initial` | `"idle"` to start without the curtain        |
 | `meta`    | anything you want to pass to the curtain     |
+| `persist` | keeps the curtain mounted when idle          |
 
 Everything else is in the [documentation](https://dev.robertoattanasio.com/react-interlude).
 

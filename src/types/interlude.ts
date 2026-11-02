@@ -14,7 +14,7 @@ export type InterludeDone = (event?: SyntheticEvent) => void;
 
 export type InterludeProps<TMeta = InterludeMeta> = {
   interlude: {
-    phase: InterludePhase;
+    phase: InterludeStatus;
     meta: TMeta;
     done: InterludeDone;
   };
@@ -32,6 +32,7 @@ export type InterludeComponentProps<TMeta = InterludeMeta> = InterludeTiming & {
   curtain: InterludeCurtain<TMeta>;
   initial?: InterludeInitial;
   meta?: TMeta;
+  persist?: boolean;
 };
 
 export type InterludeTimeline = {
