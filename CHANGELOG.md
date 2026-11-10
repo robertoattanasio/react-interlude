@@ -1,5 +1,9 @@
 # react-interlude
 
+## 0.2.1
+
+The curtain is rendered before the children, so server-rendered HTML streams it first and it covers the page from the first paint on slow connections.
+
 ## 0.2.0
 
 New `persist` prop: the curtain stays mounted when the interlude is idle, and gets `phase` set to `"idle"`. Because of this, `interlude.phase` can now be `"idle"` too.

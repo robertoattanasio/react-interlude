@@ -27,8 +27,8 @@ export const Interlude = <TMeta = InterludeMeta,>({
 
   return (
     <INTERLUDE_CONTEXT value={value}>
-      {children}
       {curtain}
+      {children}
     </INTERLUDE_CONTEXT>
   );
 };
