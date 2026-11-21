@@ -1,75 +1,43 @@
 # react-interlude
 
-Loading screens for React. You bring the animation.
-
-Your page starts behind a curtain, and the curtain leaves when everything is ready: fonts, data, whatever you're waiting for. The curtain is a normal component, so it can look and move however you want.
+`react-interlude` helps you coordinate a loading screen in React. It manages when a curtain covers the page and when it can leave, waiting for any data you specify and for a minimum display time. You provide the curtain component and its animation.
 
 Package: [npmjs.com/package/react-interlude](https://www.npmjs.com/package/react-interlude)
 
 Documentation: [dev.robertoattanasio.com/react-interlude](https://dev.robertoattanasio.com/react-interlude)
 
+## Installation
+
 ```sh
 npm install react-interlude
 ```
 
-## Usage
+React 19.2 and React DOM 19.2 are required as peer dependencies.
 
-Write your curtain and wrap your app with `Interlude`:
+Wrap your app in `Interlude` and pass it a curtain component. In this example, the curtain stays up for at least 800 ms and waits for the page's fonts to load before leaving:
 
-```jsx
+```tsx
 import { Interlude } from "react-interlude";
 
-const Curtain = ({ interlude }) => (
-  <div className="curtain" data-phase={interlude.phase} onTransitionEnd={interlude.done} />
-);
-
-function App() {
-  return (
-    <Interlude curtain={Curtain} until={() => document.fonts.ready}>
-      <Page />
-    </Interlude>
-  );
-}
+<Interlude curtain={Curtain} hold={800} until={() => document.fonts.ready}>
+  <App />
+</Interlude>;
 ```
 
-```css
-.curtain {
-  position: fixed;
-  inset: 0;
-  background: black;
-  transition: opacity 0.5s;
-}
+## API
 
-.curtain[data-phase="leaving"] {
-  opacity: 0;
-}
-```
+The guides cover the provider, its hook, and the props your curtain component receives:
 
-The curtain gets a `phase`, and calls `done` when its animation ends. That's how it works with CSS, Motion, GSAP or anything else.
+- [Interlude](./docs/interlude.md)
+- [Curtain](./docs/curtain.md): the component you write
+- [useInterlude](./docs/use-interlude.md)
+- [Lifecycle](./docs/lifecycle.md): phases, and how the curtain moves between them
+- [Meta](./docs/meta.md): typed data for the curtain
 
-To bring it back, use `useInterlude` anywhere inside:
+## Scripts
 
-```jsx
-const { cover, uncover } = useInterlude();
-
-await cover();
-await saveEverything();
-await uncover();
-```
-
-## Options
-
-| prop      | what it does                                 |
-| --------- | -------------------------------------------- |
-| `curtain` | your component                               |
-| `until`   | what to wait for before leaving              |
-| `hold`    | the minimum time to stay covered, in ms      |
-| `initial` | `"idle"` to start without the curtain        |
-| `meta`    | anything you want to pass to the curtain     |
-| `persist` | keeps the curtain mounted when idle          |
-
-Everything else is in the [documentation](https://dev.robertoattanasio.com/react-interlude).
+For the available project scripts and what they do, see [docs/scripts.md](./docs/scripts.md).
 
 ## License
 
-MIT
+[MIT](./LICENSE)
