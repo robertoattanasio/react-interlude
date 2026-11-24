@@ -1,5 +1,5 @@
 import type { InterludeInitial } from "../types/interlude.js";
-import type { InterludeAction, InterludeState } from "../types/interlude_reducer.js";
+import type { InterludeAction, InterludeState } from "../types/interlude-reducer.js";
 
 export const interludeStateFor = (initialStatus: InterludeInitial): InterludeState => ({
   status: initialStatus,

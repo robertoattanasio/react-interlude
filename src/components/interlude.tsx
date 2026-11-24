@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 
 import { INTERLUDE_CONTEXT } from "../constants/interlude.js";
-import { useInterludeTimeline } from "../hooks/use_interlude_timeline.js";
+import { useInterludeTimeline } from "../hooks/use-interlude-timeline.js";
 import type { InterludeMeta, InterludeProps } from "../types/interlude.js";
 
 export const Interlude = <TMeta = InterludeMeta,>({

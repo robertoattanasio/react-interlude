@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useReducer } from "react";
 import type { SyntheticEvent } from "react";
 
-import { interludeReducer, interludeStateFor } from "../reducer/interlude_reducer.js";
+import { interludeReducer, interludeStateFor } from "../reducer/interlude-reducer.js";
 import type { InterludeInitial, InterludeTiming } from "../types/interlude.js";
-import { isInterludeReduced, useInterludeRelease } from "./use_interlude_release.js";
-import { useInterludeWaiter } from "./use_interlude_waiter.js";
+import { isInterludeReduced, useInterludeRelease } from "./use-interlude-release.js";
+import { useInterludeWaiter } from "./use-interlude-waiter.js";
 
 export const useInterludeTimeline = (initialStatus: InterludeInitial, timing: InterludeTiming) => {
   const [state, dispatch] = useReducer(interludeReducer, initialStatus, interludeStateFor);

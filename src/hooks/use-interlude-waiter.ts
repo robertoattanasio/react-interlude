@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from "react";
 
-import type { InterludeState } from "../types/interlude_reducer.js";
+import type { InterludeState } from "../types/interlude-reducer.js";
 
 export const useInterludeWaiter = (state: InterludeState, isSettled: boolean) => {
   const waiters = useRef<(() => void)[]>([]);

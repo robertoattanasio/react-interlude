@@ -3,7 +3,7 @@ import type { ActionDispatch } from "react";
 
 import { INTERLUDE_REDUCED_MOTION } from "../constants/interlude.js";
 import type { InterludeTiming } from "../types/interlude.js";
-import type { InterludeAction, InterludeState } from "../types/interlude_reducer.js";
+import type { InterludeAction, InterludeState } from "../types/interlude-reducer.js";
 
 export const useInterludeRelease = (
   { status, target }: InterludeState,
