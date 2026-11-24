@@ -6,9 +6,9 @@ import type { InterludeInitial, InterludeTiming } from "../types/interlude.js";
 import { isInterludeReduced, useInterludeRelease } from "./use_interlude_release.js";
 import { useInterludeWaiter } from "./use_interlude_waiter.js";
 
-export const useInterludeTimeline = (initial: InterludeInitial, timing: InterludeTiming) => {
-  const [state, dispatch] = useReducer(interludeReducer, initial, interludeStateFor);
-  const { status, ready, first } = state;
+export const useInterludeTimeline = (initialStatus: InterludeInitial, timing: InterludeTiming) => {
+  const [state, dispatch] = useReducer(interludeReducer, initialStatus, interludeStateFor);
+  const { status, ready, pending, cycle } = state;
 
   const waitCovered = useInterludeWaiter(state, status === "covered");
   const waitIdle = useInterludeWaiter(state, status === "idle");
@@ -26,12 +26,30 @@ export const useInterludeTimeline = (initial: InterludeInitial, timing: Interlud
     (event?: SyntheticEvent) => {
       if (event && event.target !== event.currentTarget) return;
 
-      dispatch({ type: "done", phase: status });
+      dispatch({ type: "done", status });
     },
     [status],
   );
 
-  const timeline = useMemo(() => ({ status, ready, first, cover, uncover }), [status, ready, first, cover, uncover]);
+  const timeline = useMemo(() => {
+    const isActive = status !== "idle";
+
+    return {
+      status,
+      cycle,
+      isIdle: status === "idle",
+      isEntering: status === "entering",
+      isCovered: status === "covered",
+      isLeaving: status === "leaving",
+      isActive,
+      isPending: pending,
+      isLoading: isActive && cycle === 1,
+      isReloading: isActive && cycle > 1,
+      isReady: ready,
+      cover,
+      uncover,
+    };
+  }, [status, cycle, pending, ready, cover, uncover]);
 
   return { timeline, done };
 };

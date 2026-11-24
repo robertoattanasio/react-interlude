@@ -1,11 +1,12 @@
 import type { InterludeInitial } from "../types/interlude.js";
 import type { InterludeAction, InterludeState } from "../types/interlude_reducer.js";
 
-export const interludeStateFor = (initial: InterludeInitial): InterludeState => ({
-  status: initial,
+export const interludeStateFor = (initialStatus: InterludeInitial): InterludeState => ({
+  status: initialStatus,
   target: "idle",
-  ready: initial === "idle",
-  first: initial === "covered",
+  ready: initialStatus === "idle",
+  pending: initialStatus === "covered",
+  cycle: initialStatus === "covered" ? 1 : 0,
 });
 
 export const interludeReducer = (state: InterludeState, action: InterludeAction): InterludeState => {
@@ -15,7 +16,7 @@ export const interludeReducer = (state: InterludeState, action: InterludeAction)
 
       if (state.status === "covered" || state.status === "entering") return next;
 
-      return { ...next, first: false, status: action.reduced ? "covered" : "entering" };
+      return { ...next, cycle: state.cycle + 1, status: action.reduced ? "covered" : "entering" };
     }
     case "uncover":
       return { ...state, target: "idle" };
@@ -24,9 +25,9 @@ export const interludeReducer = (state: InterludeState, action: InterludeAction)
     case "leave":
       if (state.status !== "covered" || state.target !== "idle") return state;
 
-      return { ...state, ready: true, status: action.reduced ? "idle" : "leaving" };
+      return { ...state, ready: true, pending: false, status: action.reduced ? "idle" : "leaving" };
     case "done":
-      if (action.phase !== state.status) return state;
+      if (action.status !== state.status) return state;
       if (state.status === "entering") return { ...state, status: "covered" };
       if (state.status === "leaving") return { ...state, status: "idle" };
 

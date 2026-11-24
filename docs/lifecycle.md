@@ -1,6 +1,6 @@
 # Lifecycle
 
-## Phases
+## Statuses
 
 | Status     | The curtain                          |
 | ---------- | ------------------------------------ |
@@ -19,7 +19,7 @@
 | `leaving`  | `done`                                                      | `idle`     |
 | `leaving`  | `cover()`                                                   | `entering` |
 
-With `initial="covered"`, the page starts in `covered` and leaves on its own. With reduced motion, `entering` and `leaving` are skipped.
+With `initialStatus="covered"`, the page starts in `covered` and leaves on its own. With reduced motion, `entering` and `leaving` are skipped.
 
 ## Leaving
 
@@ -28,4 +28,4 @@ The curtain leaves when both are done:
 - `hold`: the milliseconds since the curtain became `covered`.
 - `until`: the promise it returns, called with an `AbortSignal`.
 
-`ready` turns `true` as soon as `until` resolves, even while `hold` is still running. The signal aborts when `cover()` is called again or `Interlude` unmounts.
+`isReady` turns `true` as soon as `until` settles, resolved or rejected, even while `hold` is still running. The signal aborts when `cover()` is called again or `Interlude` unmounts.

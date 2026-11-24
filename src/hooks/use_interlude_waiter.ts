@@ -4,33 +4,32 @@ import type { InterludeState } from "../types/interlude_reducer.js";
 
 export const useInterludeWaiter = (state: InterludeState, isSettled: boolean) => {
   const waiters = useRef<(() => void)[]>([]);
-  const presence = useRef<"mounted" | "cleaning" | "unmounted">("mounted");
+  const isUnmounted = useRef(false);
 
-  const flush = useCallback(() => waiters.current.splice(0).forEach((resolve) => resolve()), []);
-
-  useEffect(() => {
-    if (isSettled) flush();
-  }, [state, isSettled, flush]);
+  const resolveAll = useCallback(() => {
+    for (const resolve of waiters.current.splice(0)) resolve();
+  }, []);
 
   useEffect(() => {
-    presence.current = "mounted";
+    if (isSettled) resolveAll();
+  }, [state, isSettled, resolveAll]);
+
+  useEffect(() => {
+    isUnmounted.current = false;
 
     return () => {
-      presence.current = "cleaning";
+      isUnmounted.current = true;
 
       queueMicrotask(() => {
-        if (presence.current !== "cleaning") return;
-
-        presence.current = "unmounted";
-        flush();
+        if (isUnmounted.current) resolveAll();
       });
     };
-  }, [flush]);
+  }, [resolveAll]);
 
   return useCallback(
     (run: () => void) =>
       new Promise<void>((resolve) => {
-        if (presence.current === "unmounted") return resolve();
+        if (isUnmounted.current) return resolve();
 
         waiters.current.push(resolve);
         run();

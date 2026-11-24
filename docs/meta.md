@@ -14,19 +14,23 @@ declare module "react-interlude" {
 }
 ```
 
-A single `Interlude` can also take the type as a generic: `useInterlude<{ label: string }>()`, `InterludeProps<{ label: string }>`.
+A single `Interlude` can also take the type as a generic: `useInterlude<{ label: string }>()`, `InterludeCurtainProps<{ label: string }>`.
 
 ## Example
 
 ```tsx
-<Interlude curtain={Curtain} meta={{ label: "Loading the gallery" }}>
+const META = { label: "Loading the gallery" };
+
+<Interlude curtain={Curtain} meta={META}>
   <Gallery />
-</Interlude>
+</Interlude>;
 ```
 
+Keep `meta` stable, a constant or a memoized object: a new object on every render re-renders the curtain and every component that reads `useInterlude`.
+
 ```tsx
-const Curtain = ({ interlude: { phase, meta, done } }: InterludeProps) => (
-  <div data-phase={phase} onAnimationEnd={done}>
+const Curtain = ({ interlude: { status, meta, done } }: InterludeCurtainProps) => (
+  <div data-status={status} onAnimationEnd={done}>
     {meta.label}
   </div>
 );

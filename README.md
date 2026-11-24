@@ -4,7 +4,7 @@
 
 Package: [npmjs.com/package/react-interlude](https://www.npmjs.com/package/react-interlude)
 
-Documentation: [dev.robertoattanasio.com/react-interlude](https://dev.robertoattanasio.com/react-interlude)
+Documentation: [react-interlude.robertoattanasio.com](https://react-interlude.robertoattanasio.com)
 
 ## Installation
 
@@ -31,8 +31,10 @@ The guides cover the provider, its hook, and the props your curtain component re
 - [Interlude](./docs/interlude.md)
 - [Curtain](./docs/curtain.md): the component you write
 - [useInterlude](./docs/use-interlude.md)
-- [Lifecycle](./docs/lifecycle.md): phases, and how the curtain moves between them
-- [Meta](./docs/meta.md): typed data for the curtain
+- [Lifecycle](./docs/lifecycle.md): statuses, and how the curtain moves between them
+- [Meta](./docs/meta.md): typed data for the curtain and the page
+
+Upgrading from 0.x: see the migration table in [CHANGELOG.md](./CHANGELOG.md).
 
 ## Scripts
 

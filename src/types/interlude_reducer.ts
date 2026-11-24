@@ -4,7 +4,8 @@ export type InterludeState = {
   status: InterludeStatus;
   target: "covered" | "idle";
   ready: boolean;
-  first: boolean;
+  pending: boolean;
+  cycle: number;
 };
 
 export type InterludeAction =
@@ -12,4 +13,4 @@ export type InterludeAction =
   | { type: "leave"; reduced: boolean }
   | { type: "uncover" }
   | { type: "ready" }
-  | { type: "done"; phase: InterludeStatus };
+  | { type: "done"; status: InterludeStatus };

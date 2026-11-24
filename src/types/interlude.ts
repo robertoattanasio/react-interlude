@@ -1,8 +1,6 @@
 import type { ComponentType, ReactNode, SyntheticEvent } from "react";
 
-export type InterludePhase = "entering" | "covered" | "leaving";
-
-export type InterludeStatus = InterludePhase | "idle";
+export type InterludeStatus = "idle" | "entering" | "covered" | "leaving";
 
 export type InterludeInitial = "covered" | "idle";
 
@@ -10,35 +8,41 @@ export interface InterludeRegister {}
 
 export type InterludeMeta = InterludeRegister extends { meta: infer TMeta } ? TMeta : undefined;
 
-export type InterludeDone = (event?: SyntheticEvent) => void;
-
-export type InterludeProps<TMeta = InterludeMeta> = {
+export type InterludeCurtainProps<TMeta = InterludeMeta> = {
   interlude: {
-    phase: InterludeStatus;
+    status: InterludeStatus;
     meta: TMeta;
-    done: InterludeDone;
+    done: (event?: SyntheticEvent) => void;
   };
 };
 
-export type InterludeCurtain<TMeta = InterludeMeta> = ComponentType<InterludeProps<TMeta>>;
+export type InterludeCurtain<TMeta = InterludeMeta> = ComponentType<InterludeCurtainProps<TMeta>>;
 
 export type InterludeTiming = {
   hold?: number;
   until?: (signal: AbortSignal) => Promise<unknown>;
 };
 
-export type InterludeComponentProps<TMeta = InterludeMeta> = InterludeTiming & {
+export type InterludeProps<TMeta = InterludeMeta> = InterludeTiming & {
   children?: ReactNode;
   curtain: InterludeCurtain<TMeta>;
-  initial?: InterludeInitial;
+  initialStatus?: InterludeInitial;
   meta?: TMeta;
   persist?: boolean;
 };
 
 export type InterludeTimeline = {
   status: InterludeStatus;
-  ready: boolean;
-  first: boolean;
+  cycle: number;
+  isIdle: boolean;
+  isEntering: boolean;
+  isCovered: boolean;
+  isLeaving: boolean;
+  isActive: boolean;
+  isPending: boolean;
+  isLoading: boolean;
+  isReloading: boolean;
+  isReady: boolean;
   cover: () => Promise<void>;
   uncover: () => Promise<void>;
 };

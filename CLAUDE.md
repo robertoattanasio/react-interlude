@@ -7,7 +7,7 @@ Loading screens for React: it decides when a curtain covers the page and when it
 - [README.md](./README.md): install, links to the docs.
 - [docs/](./docs/): [interlude.md](./docs/interlude.md), [curtain.md](./docs/curtain.md), [use-interlude.md](./docs/use-interlude.md), [lifecycle.md](./docs/lifecycle.md), [meta.md](./docs/meta.md), plus [scripts.md](./docs/scripts.md) and [release.md](./docs/release.md).
 
-Read the relevant doc before changing the package. When a prop, a phase or a transition changes, update its doc in the same change.
+Read the relevant doc before changing the package. When a prop, a status or a transition changes, update its doc in the same change.
 
 ## Structure
 
@@ -30,16 +30,17 @@ src/
 ## State
 
 - `status` is what the curtain shows, `target` is where it's going: `covered` or `idle`.
+- The state also holds `ready` (`until` has settled), `pending` (the page hasn't been shown yet) and `cycle`. The flags of `useInterlude` are derived from it in `useInterludeTimeline`, one per line.
 - Every change goes through `interludeReducer`. Hooks dispatch actions, never set state.
 - The release effect runs only while `status` is `covered` and `target` is `idle`. Its `AbortController` is aborted by the cleanup.
-- `done` carries the phase it was created for: the reducer ignores it if the phase has changed.
+- `done` carries the status it was created for: the reducer ignores it if the status has changed.
 - Reduced motion is read when `cover` and `leave` are dispatched, and skips `entering` and `leaving`.
 - The promises of `cover` and `uncover` resolve when the status settles, or when `Interlude` unmounts.
 
 ## Conventions
 
 - The package draws nothing: no element, no style, no animation. The curtain is the consumer's.
-- Public types are prefixed `Interlude`. `meta` is typed through `InterludeRegister` module augmentation.
+- Public types are prefixed `Interlude`. Only four are exported from `index.ts`, the ones a consumer writes by hand: `InterludeProps`, `InterludeCurtainProps`, `InterludeStatus`, `InterludeRegister`. The others stay internal. `InterludeProps` are the props of `Interlude`, `InterludeCurtainProps` the props of the curtain. The current state is `status` everywhere, typed `InterludeStatus`. `meta` is typed through `InterludeRegister` module augmentation.
 - Constants are UPPER_SNAKE_CASE, prefixed `INTERLUDE_`.
 - Files that run in the browser are `"use client"`.
 - Relative imports end in `.js`, types are imported with `import type`.
