@@ -1,7 +1,7 @@
 {
   "name": "react-interlude",
   "version": "1.0.0",
-  "description": "Loading screens for React. You bring the animation.",
+  "description": "The loading screen engine for React. React Interlude coordinates the curtain and page through each state. You create the screen and its motion.",
   "keywords": [
     "react",
     "interlude",
